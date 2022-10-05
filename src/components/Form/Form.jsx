@@ -5,9 +5,11 @@ import { addContact } from 'redux/slice';
 
 import s from './Form.module.css';
 
-function Form({ onSubmit }) {
+function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -27,16 +29,21 @@ function Form({ onSubmit }) {
     }
   };
 
-  // const reset = () => {
-  //   setNumber('');
-  //   setName('');
-  // };
+  const reset = () => {
+    setNumber('');
+    setName('');
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    // onSubmit({ name, number });
-    // reset();
+    const filterName = name;
+
+    if (contacts.find(({ name }) => name.toLowerCase() === filterName)) {
+      alert(`${contacts.name} is already in contacts`);
+      return;
+    }
     dispatch(addContact({ name, number, id: nanoid() }));
+    reset();
   };
 
   return (
