@@ -1,4 +1,6 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const initialState = {
   items: [],
@@ -20,7 +22,14 @@ export const contactsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { addContact, deleteContact } = contactsSlice.actions;
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
 
-export default contactsSlice.reducer;
+export const persistedReducer = persistReducer(
+  persistConfig,
+  contactsSlice.reducer
+);
+
+export const { addContact, deleteContact } = contactsSlice.actions;

@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const filterSlice = createSlice({
   name: 'filter',
@@ -10,7 +10,6 @@ export const filterSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { changeFilter } = filterSlice.actions;
 
 export default filterSlice.reducer;
