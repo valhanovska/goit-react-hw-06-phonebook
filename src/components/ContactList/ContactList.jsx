@@ -1,14 +1,10 @@
 import ContactItem from '../ContactItem';
 import { useSelector } from 'react-redux';
-import { deleteContact } from 'redux/slice';
-
-import { useDispatch } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.filter);
-
-  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const lowerCaseContact = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.trim())
@@ -19,14 +15,7 @@ const ContactList = () => {
       {lowerCaseContact.length > 0 && (
         <ul>
           {lowerCaseContact.map(({ id, name, number }) => (
-            <ContactItem
-              key={id}
-              name={name}
-              number={number}
-              handleDelete={() => {
-                dispatch(deleteContact(id));
-              }}
-            />
+            <ContactItem key={id} name={name} number={number} id={id} />
           ))}
         </ul>
       )}
